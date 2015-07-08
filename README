@@ -1,3 +1,16 @@
 development dependenced:
 $ sudo apt-get install autotools-dev
 $ sudo apt-get install automake
+
+tools: 
+autoscan, aclocal, autoheader, [automake, perl], [autoconf, m4], libtools
+
+steps:
+1. create Makefile.am
+2. autoscan --> will create `configure.scan', modified it and rename to `configure.ac'
+                add `AM_INIT_AUTOMAKE' macro in `configure.ac', used by [automake]
+3. aclocal    -- require `configure.ac', and will create `aclocal.m4'
+4. autoheader -- require `configure.ac', and will create `config.h.in'
+5. automake   -- require `configure.ac', and will create Makefile.in
+                 may use 'automake --add-missing --copy' command
+6. autoconf   -- require `configure.ac', `aclocal.m4', and will create `configure' file
