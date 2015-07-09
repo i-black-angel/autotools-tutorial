@@ -16,7 +16,8 @@ autoscan, aclocal, autoheader, [automake, perl], [autoconf, m4], libtools
 4. autoheader # require `configure.ac', --> create `config.h.in'
 5. automake   # require `configure.ac', --> create `Makefile.in'
               # may use 'automake --add-missing --copy' command
-6. autoconf   # require `configure.ac', `aclocal.m4', and will create `configure'
+6. autoconf   # require `configure.ac', `aclocal.m4', and will create
+              # `configure'
 
 * automake Strictness:
 # foreign -- The foreign option tells Automake that this package
@@ -29,14 +30,15 @@ autoscan, aclocal, autoheader, [automake, perl], [autoconf, m4], libtools
 # gnits  -- Based on gnu standards, but more detail, need ./THANKS
 
 * The Two Parts of Install
-Variables using the standard directory prefixes 'data', 'info', 'man', 'include',
-'oldinclude', 'pkgdata', or 'pkginclude' are installed by `install-data'.
+Variables using the standard directory prefixes 'data', 'info', 'man', 
+'include', 'oldinclude', 'pkgdata', or 'pkginclude' are installed by
+`install-data'.
 
-Variables using the standard directory prefixes 'bin', 'sbin', 'libexec', 'sysconf',
-'localstate', 'lib', or 'pkglib' ard installed by `install-exec'.
+Variables using the standard directory prefixes 'bin', 'sbin', 'libexec', 
+'sysconf', 'localstate', 'lib', or 'pkglib' ard installed by `install-exec'.
 
-For instance, 'data_DATA' files are installed by `install-data', while 'bin_PROGRAMS'
-files are installed by `install-exec'.
+For instance, 'data_DATA' files are installed by `install-data', while 
+'bin_PROGRAMS' files are installed by `install-exec'.
 
 * automake The Uniform Naming Scheme:
 Variables for Installation Directories
@@ -111,30 +113,32 @@ prefix {
 };
 
 * How derived variables are named
-  For example, if your program is named `sniff-glue', the derived variable name would
-  be `sniff_glue_SOURCES', not `sniff-glue_SOURCES'. Similarly the sources for a library
-  name `libmumble++.a' should be listed in the `libmumble___a_SOURCES' variable.
+  For example, if your program is named `sniff-glue', the derived variable name
+  would be `sniff_glue_SOURCES', not `sniff-glue_SOURCES'. Similarly the sources
+  for a library name `libmumble++.a' should be listed in the
+  `libmumble___a_SOURCES' variable.
 
 * Variables reserved for the user
   The shadow variable is named by prepending `AM_' to the user variable's name.
 
 * Programs automake might require
-| Programs      | Description                                                      |
-|---------------+------------------------------------------------------------------|
-| ar-lib        | for the Microsoft lib archiver                                   |
-| compile       | It's only used when absolutely required                          |
-| config.guess  |                                                                  |
-| config.sub    |                                                                  |
-| depcomp       | This program understands how to run a compiler so that it        |
-| install-sh    | This is a replacement for the install program                    |
-| mdate-sh      | This script is used to generate a version.texi file.             |
-| missing       | This wraps a number of programs that are typically only required |
-|               | by maintainers                                                   |
-| mkinstalldirs | This script used to be a wrapper around `mkdir -p'               |
-| py-compile    | This is used to byte-compile Python scripts.                     |
-| test-driver   | This implements the default test driver                          |
-| texinfo.tex   |                                                                  |
-| ylwrap        | This program wraps lex and yacc to rename their output files.    | 
+| Programs      | Description                                                  |
+|---------------+--------------------------------------------------------------|
+| ar-lib        | for the Microsoft lib archiver                               |
+| compile       | It's only used when absolutely required                      |
+| config.guess  |                                                              |
+| config.sub    |                                                              |
+| depcomp       | This program understands how to run a compiler so that it    |
+| install-sh    | This is a replacement for the install program                |
+| mdate-sh      | This script is used to generate a version.texi file.         |
+| missing       | This wraps a number of programs that are typically only      |
+|               | required by maintainers                                      |
+| mkinstalldirs | This script used to be a wrapper around `mkdir -p'           |
+| py-compile    | This is used to byte-compile Python scripts.                 |
+| test-driver   | This implements the default test driver                      |
+| texinfo.tex   |                                                              |
+| ylwrap        | This program wraps lex and yacc to rename their output files |
+|               |                                                              |
 
   
 * [Makefile.am] syntax:
