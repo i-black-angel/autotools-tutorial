@@ -1,3 +1,5 @@
+GNU Build System (GNU autotools)
+
 development dependenced:
 $ sudo apt-get install autotools-dev
 $ sudo apt-get install automake
@@ -7,10 +9,32 @@ autoscan, aclocal, autoheader, [automake, perl], [autoconf, m4], libtools
 
 steps:
 1. create Makefile.am
-2. autoscan --> will create `configure.scan', modified it and rename to `configure.ac'
-                add `AM_INIT_AUTOMAKE' macro in `configure.ac', used by [automake]
-3. aclocal    -- require `configure.ac', and will create `aclocal.m4'
-4. autoheader -- require `configure.ac', and will create `config.h.in'
-5. automake   -- require `configure.ac', and will create Makefile.in
-                 may use 'automake --add-missing --copy' command
-6. autoconf   -- require `configure.ac', `aclocal.m4', and will create `configure' file
+2. autoscan   # will create `configure.scan', modified it and rename -- `configure.ac'
+              # add `AM_INIT_AUTOMAKE' macro in `configure.ac', used by [automake]
+3. aclocal    # require `configure.ac', --> create `aclocal.m4' and `autom4te.cache'
+4. autoheader # require `configure.ac', --> create `config.h.in'
+5. automake   # require `configure.ac', --> create `Makefile.in'
+              # may use 'automake --add-missing --copy' command
+	      # Strictness:
+	      # foreign -- The foreign option tells Automake that this package will not
+	      #            follow the GNU standards
+	      # gnu -- Automake will check-as much as possible-for compliance to the GNU standards
+	      #         for packages. This is the default.
+	      #         In this level, need
+	      #         ./INSTALL, ./NEWS, ./README, ./AUTHORS, ./ChangeLog, ./COPYING files
+	      # gnits  -- Based on gnu standards, but more detail, need ./THANKS
+6. autoconf   # require `configure.ac', `aclocal.m4', and will create `configure' file
+
+[Makefile.am] syntax:
+
+[configure.ac] syntax:
+AC_INIT
+  测试程序
+  测试函数库
+  测试头文件
+  测试类型定义
+  测试结构
+  测试编译器特性
+  测试库函数
+  测试系统调用
+AC_OUTPUT
