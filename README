@@ -16,18 +16,109 @@ steps:
 4. autoheader # require `configure.ac', --> create `config.h.in'
 5. automake   # require `configure.ac', --> create `Makefile.in'
               # may use 'automake --add-missing --copy' command
-	      # Strictness:
-	      # foreign -- The foreign option tells Automake that this package
-	      #            will not follow the GNU standards
-	      # gnu -- Automake will check-as much as possible-for compliance
-	      #        to the GNU standards for packages. This is the default.
-	      #         In this level, need
-	      #         ./INSTALL, ./NEWS, ./README, ./AUTHORS, ./ChangeLog,
-	      #         ./COPYING files
-	      # gnits  -- Based on gnu standards, but more detail, need ./THANKS
 6. autoconf   # require `configure.ac', `aclocal.m4', and will create `configure'
 
+automake Strictness:
+# foreign -- The foreign option tells Automake that this package
+#            will not follow the GNU standards
+# gnu -- Automake will check-as much as possible-for compliance
+#        to the GNU standards for packages. This is the default.
+#         In this level, need
+#         ./INSTALL, ./NEWS, ./README, ./AUTHORS, ./ChangeLog,
+#         ./COPYING files
+# gnits  -- Based on gnu standards, but more detail, need ./THANKS
+
+The Two Parts of Install
+Variables using the standard directory prefixes 'data', 'info', 'man', 'include',
+'oldinclude', 'pkgdata', or 'pkginclude' are installed by `install-data'.
+
+Variables using the standard directory prefixes 'bin', 'sbin', 'libexec', 'sysconf',
+'localstate', 'lib', or 'pkglib' ard installed by `install-exec'.
+
+For instance, 'data_DATA' files are installed by `install-data', while 'bin_PROGRAMS'
+files are installed by `install-exec'.
+
+automake The Uniform Naming Scheme:
+Variables for Installation Directories
+| Directory variable | Default value              |
+|--------------------+----------------------------|
+| prefix             | /usr/local                 |
+| exec_prefix        | ${prefix}                  |
+| bindir             | ${prefix}/bin              |
+| sbindir            | ${prefix}/sbin             |
+| libdir             | ${prefix}/lib              |
+| libexecdir         | ${prefix}/libexec          |
+| includedir         | ${prefix}/include          |
+| sysconfdir         | ${prefix}/etc              |
+| sharedstatedir     | ${prefix}/com              |
+| localstatedir      | ${prefix}/var              |
+| runstatedir        | ${localstatedir}/run       |
+| datarootdir        | ${prefix}/share            |
+| datadir            | ${datarootdir}             |
+| mandir             | ${datadir}/man             |
+| infodir            | ${datadir}/info            |
+| docdir             | ${datadir}/doc/${PACKAGE}  |
+the 'configure' script should take options corresponding to above
+directories list
+
+Automake extends with
+| Directory variable | Default value            |
+|--------------------+--------------------------|
+| pkgdatadir         | ${datadir}/${PACKAGE}    |
+| pkgincludedir      | ${includedir}/${PACKAGE} |
+| pkglibdir          | ${libdir}/${PACKAGE}     |
+| pkglibexecdir      | ${libexecdir}/${PACKAGE} |
+
+Standard Configuration Variable
+| Variable | Comment                  |
+|----------+--------------------------|
+| CC       | C compiler command       |
+| CFLAGS   | C compiler flags         |
+| CXX      | C++ compiler command     |
+| CXXFLAGS | C++ compiler flags       |
+| LDFLAGS  | linker flags             |
+| CPPFLAGS | C/C++ preprocessor flags |
+
+extend your own installation directories
+    xmldir = $(datadir)/xml
+    xml_DATA = file.xml
+
+# Forbidden directory combinations, automake will error out on this
+    pkglib_PROGRAMS = foo         [error]
+    doc_LIBRARIES = libquux.a     [error]
+
+primary names {
+    PROGRAMS,
+    LIBRARIES,
+    LTLIBRARIES,
+    LISP,
+    PYTHON,
+    JAVA,
+    SCRIPTS,
+    DATA,
+    HEADERS,
+    MANS,
+    TEXINFOS
+};
+
+prefix {
+    noinst_,     # should be built but not installed at all
+    check_,      # should not be built until the 'make check' command is run
+    dist_,
+    nodist_,
+    nobase_,
+    notrans_,
+};
+
 [Makefile.am] syntax:
+bin_PROGRAMS
+  `bin_' defines directory
+  `PROGRAMS' is a primary
+
+dist_doc_DATA
+  `dist_' prefix
+  `doc_' defines directory
+  `DATA' is a primary
 
 [configure.ac] syntax:
 AC_INIT
