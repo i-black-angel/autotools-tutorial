@@ -1,13 +1,13 @@
 GNU Build System (GNU autotools)
 
-development dependenced:
+* development dependenced:
 $ sudo apt-get install autotools-dev
 $ sudo apt-get install automake
 
-tools: 
+* tools: 
 autoscan, aclocal, autoheader, [automake, perl], [autoconf, m4], libtools
 
-steps:
+* steps:
 1. create Makefile.am
 2. autoscan   # will create `configure.scan', modified it and rename
               # -- `configure.ac', add `AM_INIT_AUTOMAKE' macro in
@@ -18,7 +18,7 @@ steps:
               # may use 'automake --add-missing --copy' command
 6. autoconf   # require `configure.ac', `aclocal.m4', and will create `configure'
 
-automake Strictness:
+* automake Strictness:
 # foreign -- The foreign option tells Automake that this package
 #            will not follow the GNU standards
 # gnu -- Automake will check-as much as possible-for compliance
@@ -28,7 +28,7 @@ automake Strictness:
 #         ./COPYING files
 # gnits  -- Based on gnu standards, but more detail, need ./THANKS
 
-The Two Parts of Install
+* The Two Parts of Install
 Variables using the standard directory prefixes 'data', 'info', 'man', 'include',
 'oldinclude', 'pkgdata', or 'pkginclude' are installed by `install-data'.
 
@@ -38,7 +38,7 @@ Variables using the standard directory prefixes 'bin', 'sbin', 'libexec', 'sysco
 For instance, 'data_DATA' files are installed by `install-data', while 'bin_PROGRAMS'
 files are installed by `install-exec'.
 
-automake The Uniform Naming Scheme:
+* automake The Uniform Naming Scheme:
 Variables for Installation Directories
 | Directory variable | Default value              |
 |--------------------+----------------------------|
@@ -110,7 +110,34 @@ prefix {
     notrans_,
 };
 
-[Makefile.am] syntax:
+* How derived variables are named
+  For example, if your program is named `sniff-glue', the derived variable name would
+  be `sniff_glue_SOURCES', not `sniff-glue_SOURCES'. Similarly the sources for a library
+  name `libmumble++.a' should be listed in the `libmumble___a_SOURCES' variable.
+
+* Variables reserved for the user
+  The shadow variable is named by prepending `AM_' to the user variable's name.
+
+* Programs automake might require
+| Programs      | Description                                                      |
+|---------------+------------------------------------------------------------------|
+| ar-lib        | for the Microsoft lib archiver                                   |
+| compile       | It's only used when absolutely required                          |
+| config.guess  |                                                                  |
+| config.sub    |                                                                  |
+| depcomp       | This program understands how to run a compiler so that it        |
+| install-sh    | This is a replacement for the install program                    |
+| mdate-sh      | This script is used to generate a version.texi file.             |
+| missing       | This wraps a number of programs that are typically only required |
+|               | by maintainers                                                   |
+| mkinstalldirs | This script used to be a wrapper around `mkdir -p'               |
+| py-compile    | This is used to byte-compile Python scripts.                     |
+| test-driver   | This implements the default test driver                          |
+| texinfo.tex   |                                                                  |
+| ylwrap        | This program wraps lex and yacc to rename their output files.    | 
+
+  
+* [Makefile.am] syntax:
 bin_PROGRAMS
   `bin_' defines directory
   `PROGRAMS' is a primary
@@ -120,7 +147,7 @@ dist_doc_DATA
   `doc_' defines directory
   `DATA' is a primary
 
-[configure.ac] syntax:
+* [configure.ac] syntax:
 AC_INIT
   测试程序
   测试函数库
