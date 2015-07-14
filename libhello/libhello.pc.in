@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libhello
+Description: C API for print hello world string
+Version: @VERSION@
+Libs: -L${libdir} -lhello
+Cflags: -I${includedir}
